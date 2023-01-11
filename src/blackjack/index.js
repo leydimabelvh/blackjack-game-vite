@@ -1,7 +1,7 @@
 import _ from 'underscore';
 import { createDeck } from './use-cases/create-deck';
 import { getCard } from './use-cases/get-card';
-
+import { showCardValue } from './use-cases/show-card-value' ;
 
 /**
  * 2C = Two of Clubs (Tréboles)
@@ -30,20 +30,6 @@ btnStopGame.disabled = true;
 
 deck = createDeck(types, specials);
 getCard(deck);
-
-//Función que permite saber el valor de la carta
-const showCardValue = (card) => {
-    // const value = card[0];
-    const value = card.substring(0, card.length - 1);
-    
-    return ( isNaN(value) ) ? 
-            ( ( value === 'A' ) ? 11 : 10 ) 
-            : value * 1;
-
-}
-
-// showCardValue(getCard());
-
 
 const generateComputerShift = (minimumPoints) => {
     do {
