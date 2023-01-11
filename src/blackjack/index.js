@@ -1,5 +1,7 @@
 import _ from 'underscore';
 import { createDeck } from './use-cases/create-deck';
+import { getCard } from './use-cases/get-card';
+
 
 /**
  * 2C = Two of Clubs (Tréboles)
@@ -27,20 +29,7 @@ btnStopGame.disabled = true;
 
 
 deck = createDeck(types, specials);
-
-//Función que permite tomar una carta de la baraja
-const getCard = () => {
-
-    if (deck.length === 0) {
-        throw 'Error: No hay cartas en la baraja.';
-    } 
-
-    const card = deck.pop();
-
-    return card;
-}
-
-getCard();
+getCard(deck);
 
 //Función que permite saber el valor de la carta
 const showCardValue = (card) => {
@@ -59,7 +48,7 @@ const showCardValue = (card) => {
 const generateComputerShift = (minimumPoints) => {
     do {
 
-        const card = getCard();
+        const card = getCard(deck);
         // computerPoints = computerPoints + showCardValue();
         computerPoints += showCardValue(card);
     
@@ -105,7 +94,7 @@ const generateComputerShift = (minimumPoints) => {
 
 //Eventos
 btnGetCard.addEventListener('click', () => {
-    const card = getCard();
+    const card = getCard(deck);
     // playerPoints = playerPoints + showCardValue();
     playerPoints += showCardValue(card);
 
