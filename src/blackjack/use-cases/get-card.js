@@ -6,7 +6,5 @@ export const getCard = (deck) => {
         throw 'Error: No hay cartas en la baraja.';
     } 
 
-    const card = deck.pop();
-
-    return card;
+    return deck.pop();
 }

@@ -2,6 +2,9 @@ import _ from 'underscore';
 import { createDeck } from './use-cases/create-deck';
 import { getCard } from './use-cases/get-card';
 import { showCardValue } from './use-cases/show-card-value' ;
+import { determinateResult } from './use-cases/determinate-result' ;
+
+
 
 /**
  * 2C = Two of Clubs (Tréboles)
@@ -59,23 +62,7 @@ const generateComputerShift = (minimumPoints) => {
     } while ((computerPoints < minimumPoints) && (minimumPoints <= 21));
 
 
-    setTimeout(() => {
-        //Mostrar resultados
-        if (computerPoints > 21) {
-            alert('¡Ganó el jugador!');
-            console.warn('¡Ganó el jugador!');
-        } else if (minimumPoints > 21) {
-            alert('¡Ganó la computadora!');
-            console.warn('¡Ganó la computadora!');
-        } else if (computerPoints === minimumPoints) {
-            alert('Empate, niguno ganó.');
-            console.warn('Empate, niguno ganó');
-        } else {
-            alert('¡Ganó la computadora!');
-            console.warn('¡Ganó la computadora!');
-        }
-
-    }, 100);
+    determinateResult(computerPoints, minimumPoints);
 }
 
 //Eventos
