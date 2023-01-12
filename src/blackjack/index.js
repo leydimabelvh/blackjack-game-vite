@@ -4,6 +4,7 @@ import { getCard } from './use-cases/get-card';
 import { showCardValue } from './use-cases/show-card-value' ;
 import { showImageCard } from './use-cases/show-image-card';
 import { generateComputerShift } from './use-cases/generate-computer-shift';
+import { accumulatePoints } from './use-cases/accumulate-points';
 
 
 
@@ -14,22 +15,24 @@ import { generateComputerShift } from './use-cases/generate-computer-shift';
  * 2S = Two of Spades (Espadas)
  */
 let deck = [];
-let types = ['C', 'D', 'H', 'S'];
-let specials = ['A', 'J', 'K', 'Q'];
-let playerPoints = 0;
-let computerPoints = 0;
+
+let types = ['C', 'D', 'H', 'S'],
+    specials = ['A', 'J', 'K', 'Q'];
+
+export let playersPoints = [];
 
 //Referencias de HTML
-const btnGetCard = document.querySelector('#btnGetCard');
-const btnStopGame = document.querySelector('#btnStopGame');
-const btnNewGame = document.querySelector('#btnNewGame');
-const tagPoints = document.querySelectorAll('span');
-const playerCards = document.querySelector('#player__cards');
-const computerCards = document.querySelector('#computer__cards');
+const btnGetCard = document.querySelector("#btnGetCard"),
+      btnStopGame = document.querySelector("#btnStopGame"),
+      btnNewGame = document.querySelector("#btnNewGame");
 
+export const tagPoints = document.querySelectorAll("span");
+
+export const playersCards = document.querySelectorAll(".cardGame__container");
+
+//Deshabilitar botones
 btnGetCard.disabled = true;
 btnStopGame.disabled = true;
-
 
 deck = createDeck(types, specials);
 getCard(deck);
@@ -38,28 +41,22 @@ getCard(deck);
 btnGetCard.addEventListener('click', () => {
     const card = getCard(deck);
     // playerPoints = playerPoints + showCardValue();
-    playerPoints += showCardValue(card);
+    const playerPoints = accumulatePoints(card, 0);
 
-    console.log(card);
-    console.log(playerPoints);
-    
-    tagPoints[0].innerText = playerPoints;
-    console.log(tagPoints);
-
-    showImageCard(card, playerCards);
+    showImageCard(card, 0);
 
     //Control de puntos
     if (playerPoints > 21) {
         console.warn('Lo siento, perdiste.');
         btnGetCard.disabled = true;
         btnStopGame.disabled = true;
-        generateComputerShift(playerPoints, deck, tagPoints[1]);
+        generateComputerShift(playerPoints, deck);
 
     } else if (playerPoints === 21) {
         console.warn('¡Genial, 21!');
         btnGetCard.disabled = true;
         btnStopGame.disabled = true;
-        generateComputerShift(playerPoints, deck, tagPoints[1], computerCards);
+        generateComputerShift(playerPoints, deck);
     }
 });
 
@@ -67,11 +64,12 @@ btnStopGame.addEventListener('click', () => {
     btnGetCard.disabled = true;
     btnStopGame.disabled = true;
 
-    generateComputerShift(playerPoints, deck, tagPoints[1], computerCards);
+    generateComputerShift(playersPoints[0], deck);
 });
 
 btnNewGame.addEventListener('click', () => {
     console.clear();
+
     //Habilar botones
     btnGetCard.disabled = false;
     btnStopGame.disabled = false;
@@ -80,15 +78,16 @@ btnNewGame.addEventListener('click', () => {
     deck = [];
     deck = createDeck(types, specials);
 
+    let numberPlayers = 2;
     //Resetear puntos
-    playerPoints = 0;
-    computerPoints = 0;
+    playersPoints = [];
+    for (let i = 0; i < numberPlayers; i++) {
+      playersPoints.push(0);
+    }
     
     //Resetear texto de puntaje
-    tagPoints[0].innerText = 0;
-    tagPoints[1].innerText = 0;
+    tagPoints.forEach(element => element.innerText = 0);
 
     //Remover imagen de carta
-    playerCards.innerHTML = '';
-    computerCards.innerHTML = '';
+    playersCards.forEach(element => element.innerHTML = "");
 });

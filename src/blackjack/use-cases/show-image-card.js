@@ -1,3 +1,5 @@
+import { playersCards } from "../";
+
 export const showImageCard = (card, shift) => {
     //Insertar imagen de carta
     const imageCard = document.createElement("img");
@@ -5,5 +7,5 @@ export const showImageCard = (card, shift) => {
     imageCard.classList.add("cardGame__image");
     imageCard.alt = "Image of a deck of cards";
     imageCard.width = "120";
-    shift.append(imageCard);
+    playersCards[shift].append(imageCard);
   };

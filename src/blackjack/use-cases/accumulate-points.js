@@ -1,11 +1,11 @@
 import { showCardValue } from "./show-card-value";
+import { playersPoints, tagPoints } from "../";
 
+export const accumulatePoints = (card, shift) => {
+  // playersPoints[shift] = playersPoints[shift] + showCardValue();
+  playersPoints[shift] += showCardValue(card);
 
-export const accumulatePoints = (card, shift, tagPoints) => {
-    // playersPoints[shift] = playersPoints[shift] + showCardValue();
-    shift += showCardValue(card);
+  tagPoints[shift].innerText = playersPoints[shift];
 
-    tagPoints.innerText = shift;
-
-    return shift;
-  };
+  return playersPoints[shift];
+};

@@ -1,23 +1,18 @@
 import { getCard } from './get-card';
-import { showCardValue } from './show-card-value';
 import { showImageCard } from './show-image-card';
 import { determinateResult } from './determinate-result' ;
 import { accumulatePoints } from './accumulate-points';
+import { playersPoints } from '../index'; 
 
-
-export const generateComputerShift = (minimumPoints, deck, tagPoints, computerCards) => {
+export const generateComputerShift = (minimumPoints, deck) => {
     let computerPoints = 0;
     
     do {
         const card = getCard(deck);
 
-        computerPoints = accumulatePoints( card, computerPoints, tagPoints);
+        computerPoints = accumulatePoints( card, playersPoints.length - 1 );
     
-        showImageCard(card, computerCards);
-
-        if (minimumPoints > 21) {
-            break;
-        }
+        showImageCard(card, playersPoints.length - 1);
         
     } while ((computerPoints < minimumPoints) && (minimumPoints <= 21));
 
