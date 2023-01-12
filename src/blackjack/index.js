@@ -3,6 +3,7 @@ import { createDeck } from './use-cases/create-deck';
 import { getCard } from './use-cases/get-card';
 import { showCardValue } from './use-cases/show-card-value' ;
 import { determinateResult } from './use-cases/determinate-result' ;
+import { showImageCard } from './use-cases/show-image-card';
 
 
 
@@ -47,13 +48,7 @@ const generateComputerShift = (minimumPoints) => {
         tagPoints[1].innerText = computerPoints;
         console.log(tagPoints);
     
-        //Insertar imagen de carta
-        const imageCard = document.createElement('img');
-        imageCard.src = `./assets/images/cards/${card}.png`;
-        imageCard.classList.add('cardGame__image');
-        imageCard.alt = 'Image of a deck of cards';
-        imageCard.width = '120';
-        computerCards.append(imageCard);
+        showImageCard(card, computerCards);
 
         if (minimumPoints > 21) {
             break;
@@ -77,13 +72,7 @@ btnGetCard.addEventListener('click', () => {
     tagPoints[0].innerText = playerPoints;
     console.log(tagPoints);
 
-    //Insertar imagen de carta
-    const imageCard = document.createElement('img');
-    imageCard.src = `./assets/images/cards/${card}.png`;
-    imageCard.classList.add('cardGame__image');
-    imageCard.alt = 'Image of a deck of cards';
-    imageCard.width = '120';
-    playerCards.append(imageCard);
+    showImageCard(card, playerCards);
 
     //Control de puntos
     if (playerPoints > 21) {
