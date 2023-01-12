@@ -2,8 +2,8 @@ import _ from 'underscore';
 import { createDeck } from './use-cases/create-deck';
 import { getCard } from './use-cases/get-card';
 import { showCardValue } from './use-cases/show-card-value' ;
-import { determinateResult } from './use-cases/determinate-result' ;
 import { showImageCard } from './use-cases/show-image-card';
+import { generateComputerShift } from './use-cases/generate-computer-shift';
 
 
 
@@ -13,7 +13,6 @@ import { showImageCard } from './use-cases/show-image-card';
  * 2H = Two of Hearts (Corazones)
  * 2S = Two of Spades (Espadas)
  */
-
 let deck = [];
 let types = ['C', 'D', 'H', 'S'];
 let specials = ['A', 'J', 'K', 'Q'];
@@ -35,31 +34,6 @@ btnStopGame.disabled = true;
 deck = createDeck(types, specials);
 getCard(deck);
 
-const generateComputerShift = (minimumPoints) => {
-    do {
-
-        const card = getCard(deck);
-        // computerPoints = computerPoints + showCardValue();
-        computerPoints += showCardValue(card);
-    
-        console.log(card);
-        console.log(computerPoints);
-        
-        tagPoints[1].innerText = computerPoints;
-        console.log(tagPoints);
-    
-        showImageCard(card, computerCards);
-
-        if (minimumPoints > 21) {
-            break;
-        }
-        
-    } while ((computerPoints < minimumPoints) && (minimumPoints <= 21));
-
-
-    determinateResult(computerPoints, minimumPoints);
-}
-
 //Eventos
 btnGetCard.addEventListener('click', () => {
     const card = getCard(deck);
@@ -79,13 +53,13 @@ btnGetCard.addEventListener('click', () => {
         console.warn('Lo siento, perdiste.');
         btnGetCard.disabled = true;
         btnStopGame.disabled = true;
-        generateComputerShift(playerPoints);
+        generateComputerShift(playerPoints, deck, tagPoints[1]);
 
     } else if (playerPoints === 21) {
         console.warn('¡Genial, 21!');
         btnGetCard.disabled = true;
         btnStopGame.disabled = true;
-        generateComputerShift(playerPoints);
+        generateComputerShift(playerPoints, deck, tagPoints[1], computerCards);
     }
 });
 
@@ -93,7 +67,7 @@ btnStopGame.addEventListener('click', () => {
     btnGetCard.disabled = true;
     btnStopGame.disabled = true;
 
-    generateComputerShift(playerPoints);
+    generateComputerShift(playerPoints, deck, tagPoints[1], computerCards);
 });
 
 btnNewGame.addEventListener('click', () => {
