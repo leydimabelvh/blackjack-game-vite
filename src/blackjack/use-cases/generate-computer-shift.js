@@ -2,6 +2,7 @@ import { getCard } from './get-card';
 import { showCardValue } from './show-card-value';
 import { showImageCard } from './show-image-card';
 import { determinateResult } from './determinate-result' ;
+import { accumulatePoints } from './accumulate-points';
 
 
 export const generateComputerShift = (minimumPoints, deck, tagPoints, computerCards) => {
@@ -9,14 +10,8 @@ export const generateComputerShift = (minimumPoints, deck, tagPoints, computerCa
     
     do {
         const card = getCard(deck);
-        // computerPoints = computerPoints + showCardValue();
-        computerPoints += showCardValue(card);
-    
-        console.log(card);
-        console.log(computerPoints);
-        
-        tagPoints.innerText = computerPoints;
-        console.log(tagPoints);
+
+        computerPoints = accumulatePoints( card, computerPoints, tagPoints);
     
         showImageCard(card, computerCards);
 
