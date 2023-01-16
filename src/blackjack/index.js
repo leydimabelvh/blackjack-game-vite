@@ -1,10 +1,4 @@
-import _ from "underscore";
-import { accumulatePoints } from "./use-cases/accumulate-points";
-import { createDeck } from "./use-cases/create-deck";
-import { generateComputerShift } from "./use-cases/generate-computer-shift";
-import { getCard } from "./use-cases/get-card";
-import { showImageCard } from "./use-cases/show-image-card";
-import { initialiseGame } from "./use-cases/initialise-game";
+import { accumulatePoints, generateComputerShift, getCard, initialiseGame, showImageCard } from './use-cases/index';
 
 /**
  * 2C = Two of Clubs (Tréboles)
